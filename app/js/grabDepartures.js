@@ -32,29 +32,29 @@ $(document).ready(function() {
             // Add IATA airline code
             IATA: function(callback) {
               if (flight.Airline === 'US Airways') {
-                IATA = 'US'
+                var IATA = 'US'
               } else if (flight.Airline === 'Southwest Airlines') {
-                IATA = 'WN'
+                var IATA = 'WN'
               } else if (flight.Airline === 'JetBlue') {
-                IATA = 'XXX'
+                var IATA = 'B6'
               } else if (flight.Airline === 'Air Canada') {
-                IATA = 'XXX'
+                var IATA = 'AC'
               } else if (flight.Airline === 'Virgin America') {
-                IATA = 'XXX'
+                var IATA = 'VX'
               } else if (flight.Airline === 'Delta') {
-                IATA = 'XXX'
+                var IATA = 'DL'
               } else if (flight.Airline === 'United') {
-                IATA = 'XXX'
+                var IATA = 'UA'
               } else if (flight.Airline === 'American') {
-                IATA = 'XXX'
+                var IATA = 'AA'
               } else if (flight.Airline === 'Delta Shuttle') {
-                IATA = 'XXX'
+                var IATA = 'DL'
               } else if (flight.Airline === 'Frontier') {
-                IATA = 'XXX'
+                var IATA = 'F9'
               } else if (flight.Airline === 'Alaska') {
-                IATA = 'XXX'
+                var IATA = 'AS'
               } else if (flight.Airline === 'Sun Country Airlines') {
-                IATA = 'XXX'
+                var IATA = 'SY'
               } else {
                 'AIRLINE NOT RECOGNIZED: NEED IATA CODE FOR ' + flight.Airline
               }
@@ -78,56 +78,5 @@ $(document).ready(function() {
     }
 
   });
-
-
-
-  // async.waterfall([
-  //   // grab json from MWAA web service
-  //   function(callback) {
-  //     $.ajax({
-  //       url: "http://localhost:9000/mock/departures_reagan.json"
-  //     }).then(function(data) {
-  //       var obj = jQuery.parseJSON(data);
-  //       callback(null, obj);
-  //     });
-  //   },
-  //   function(obj, callback) {
-  //     console.log(obj);
-  //     callback(null, 'three');
-  //   },
-  //   function(arg1, callback) {
-  //     // arg1 now equals 'three'
-  //     callback(null, 'done');
-  //   }
-  // ], function(err, result) {
-  //   // result now equals 'done'
-  // });
-
-
-
-  // Air Canada
-  // AC
-  //
-  // Alaska Airlines
-  // AS
-  //
-  // American Airlines
-  // AA
-  //
-  // Delta Air Lines(DL)
-  //
-  // Frontier Airlines(F9)
-  //
-  // JetBlue Airways(B6)
-  //
-  // Southwest Airlines(WN)
-  //
-  // Sun Country Airlines(SY)
-  //
-  // United Airlines(UA)
-  //
-  // US Airways(US)
-  //
-  // Virgin America(VX)
 
 });
