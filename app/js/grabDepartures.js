@@ -1,5 +1,22 @@
 'use strict';
 
+// object for "processed" flight records
+var flights = {};
+flights.US = [];
+flights.WN = [];
+flights.B6 = [];
+flights.AC = [];
+flights.VX = [];
+flights.DL = [];
+flights.UA = [];
+flights.AA = [];
+flights.DL = [];
+flights.US = [];
+flights.DL = [];
+flights.F9 = [];
+flights.AS = [];
+flights.SY = [];
+
 $(document).ready(function() {
 
   // $.ajax({
@@ -22,10 +39,9 @@ $(document).ready(function() {
     for (var i = 0; i < results.length; i++) {
 
       var flight = results[i];
-      console.log(flight.Airline + ' ' + flight.Number);
 
       // skip record if flight has already departed
-      if (flight.Status === "Departed") {
+      if (flight.Status != "Departed") {
 
         async.parallel({
 
@@ -61,21 +77,38 @@ $(document).ready(function() {
               callback(null, IATA);
             },
 
-            two: function(callback) {
-              setTimeout(function() {
-                callback(null, 2);
-              }, 100);
+            // clean up airline name
+            airline: function(callback) {
+              if (flight.Airline === 'Delta Shuttle') {
+                var airline = 'Delta'
+              } else if (flight.Airline === 'American') {
+                var airline = 'American Airlines'
+              } else {
+                var airline = flight.Airline;
+              };
+              callback(null, airline);
+            },
+
+            // format departure time
+            departure: function(callback) {
+              var departure = moment(flight.Scheduled).format("LT");
+              callback(null, departure);
             }
 
           },
           function(err, results) {
-            // results is now equals to: {one: 1, two: 2}
-            console.log(results);
+            results.status = flight.Status;
+            results.number = flight.Number;
+            results.destination = flight.Location;
+            results.gate = flight.Gate;
+            flights[results.IATA].push(results);
           });
 
       }
 
     }
+
+    console.log(flights);
 
   });
 
