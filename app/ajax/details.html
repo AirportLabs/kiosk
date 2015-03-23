@@ -1,64 +1,95 @@
-<h1><span id="airlineName"></span> <span id="flightNumber"></span></h1>
-			<p>Customer Service Number: <%= phoneNumber %></p>
-			<p>Departs at <mark><%= publishedDeparture %></mark> with an expected arrival at <mark><%= estimatedGateArrival %></mark></p>
+<h1>
+  <span id="airlineName"></span>
+  <span id="flightNumber"></span>
+</h1>
+<p>Customer Service Number:
+  <span id="phoneNumber"></span>
+</p>
+<p>Departs at
+  <mark>
+    <span id="publishedDeparture"></span>
+  </mark> with an expected arrival at
+  <mark>
+    <span id="estimatedGateArrival"></span>
+  </mark>
+</p>
 
-			<h2>Equiptment</h2>
-			<p><%= equipment %></p>
+<h2>Equiptment</h2>
+<p>
+  <span id="equipment"></span>
+</p>
 
-			<ul class="list-group">
-			  <li class="list-group-item">
-			    <span class="badge"><%= jet %></span>
-					Jet
-			  </li>
-				<li class="list-group-item">
-			    <span class="badge"><%= turboProp %></span>
-					Turboprop
-			  </li>
-				<li class="list-group-item">
-			    <span class="badge"><%= widebody %></span>
-					Widebody
-			  </li>
-				<li class="list-group-item">
-			    <span class="badge"><%= regional %></span>
-					Regional
-			  </li>
-			</ul>
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="jet"></span>
+    </span>
+    Jet
+  </li>
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="turboProp"></span>
+    </span>
+    Turboprop
+  </li>
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="widebody"></span>
+    </span>
+    Widebody
+  </li>
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="regional"></span>
+    </span>
+    Regional
+  </li>
+</ul>
 
-			<h2>Service Classes</h2>
-			<ul class="list-group">
-			  <li class="list-group-item">
-			    <span class="badge"><%= firstClass %></span>
-					First Class
-			  </li>
-				<li class="list-group-item">
-			    <span class="badge"><%= businessClass %></span>
-					Business Class
-			  </li>
-				<li class="list-group-item">
-			    <span class="badge"><%= premiumEconomy %></span>
-					Premium Economy
-			  </li>
-				<li class="list-group-item">
-			    <span class="badge"><%= economyClass %></span>
-					Economy Class
-			  </li>
-			</ul>
+<h2>Service Classes</h2>
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="firstClass"></span>
+    </span>
+    First Class
+  </li>
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="businessClass"></span>
+    </span>
+    Business Class
+  </li>
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="premiumEconomy"></span>
+    </span>
+    Premium Economy
+  </li>
+  <li class="list-group-item">
+    <span class="badge">
+      <span id="economyClass"></span>
+    </span>
+    Economy Class
+  </li>
+</ul>
 
-			<h2>Flight Time</h2>
-			<p>
-				<%= scheduledBlockMinutes %> minutes
-				<br><small><i><span class="text-muted">time in the air: <%= scheduledAirMinutes %> minutes</span></i></small>
-			</p>
+<h2>Flight Time</h2>
+<p>
+  <span id="scheduledBlockMinutes"></span> minutes
+  <br>
+  <small><i><span class="text-muted">time in the air: <span id="scheduledAirMinutes"></span> minutes</span></i></small>
+</p>
 
-			<div class="progress">
-			  <div class="progress-bar progress-bar-warning" style="width: <%= scheduledTaxiOutMinutesStats %>%"></div>
-			  <div class="progress-bar progress-bar-info" style="width: <%= scheduledAirMinutesStats %>%"></div>
-			  <div class="progress-bar progress-bar-warning" style="width: <%= scheduledTaxiInMinutesStats %>%"></div>
-			</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-warning" style="width: <span id=" scheduledTaxiOutMinutesStats "></span>%"></div>
+  <div class="progress-bar progress-bar-info" style="width: <span id=" scheduledAirMinutesStats "></span>%"></div>
+  <div class="progress-bar progress-bar-warning" style="width: <span id=" scheduledTaxiInMinutesStats "></span>%"></div>
+</div>
 
-			<!-- <h2>Loop</h2>
-			<ul>
-			    <% drinks.forEach(function(drink) { %>
-			        <li><%= drink.name %> - <%= drink.drunkness %></li>
-			    <% }); %>
-			</ul> -->
+<h2>Food Near My Gate</h2>
+
+<p>Five Guys</p>
+<p>Gordon Biersch</p>
+<p>Cinnabon</p>
+<p>...</p>
