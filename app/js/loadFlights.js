@@ -8,14 +8,13 @@ function loadAirline(IATA) {
 
   $("#contentarea").load("ajax/flights.html", function() {
 
-    alert("Load was performed.");
-
     $.each(flights[IATA], function(index, value) {
 
-      var html = '<a href="#" class="list-group-item">';
-      html += '<h4 class="list-group-item-heading">' + value.airline + ' ' + value.number + '</h4>';
-      html += '<p class="list-group-item-text">...</p>';
-      html += '</a>';
+      var html = '<a onClick="loadDetails(' + IATA + ',' + value.number + ')" class="list-group-item"><div class="row">';
+      html += '<div class="col-md-4">' + value.destination + '</div>';
+      html += '<div class="col-md-4">' + value.airline + ' ' + value.number + '</div>';
+      html += '<div class="col-md-4"><span class="badge">' + value.departure + '</span></div>';
+      html += '</div></a>';
       $("#flightsList").append(html);
 
     });
