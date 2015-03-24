@@ -1,9 +1,14 @@
 <h1>
   <span id="airlineName"></span>
-  <span id="flightNumber"></span>
 </h1>
-<p>Customer Service Number:
-  <span id="phoneNumber"></span>
+<h2>
+  Flight
+  <span id="flightNumber"></span>
+</h2>
+<p>
+  <small>Customer Service Number:
+    <span id="phoneNumber"></span>
+  </small>
 </p>
 <p>Departs at
   <mark>
@@ -12,6 +17,14 @@
   <mark>
     <span id="estimatedGateArrival"></span>
   </mark>
+</p>
+
+<h2>Flight Performance</h2>
+<p>
+  Percent On-time:
+  <span id="ontimePercent"></span>
+  <br>
+  <input id="allOntimeStars" class="rating" data-readonly="true" data-glyphicon="false" data-rating-class="rating-fa" data-size="xs" data-show-clear="false" data-show-caption="true">
 </p>
 
 <h2>Equiptment</h2>
@@ -36,13 +49,13 @@
     <span class="badge">
       <span id="widebody"></span>
     </span>
-    Widebody
+    Twin-aisle aircraft (widebody)
   </li>
   <li class="list-group-item">
     <span class="badge">
       <span id="regional"></span>
     </span>
-    Regional
+    Regional airliner/airplane
   </li>
 </ul>
 
@@ -62,7 +75,7 @@
   </li>
   <li class="list-group-item">
     <span class="badge">
-      <span id="premiumEconomy"></span>
+      <span id="premiumEconomyClass"></span>
     </span>
     Premium Economy
   </li>
@@ -81,11 +94,7 @@
   <small><i><span class="text-muted">time in the air: <span id="scheduledAirMinutes"></span> minutes</span></i></small>
 </p>
 
-<div class="progress">
-  <div class="progress-bar progress-bar-warning" style="width: <span id=" scheduledTaxiOutMinutesStats "></span>%"></div>
-  <div class="progress-bar progress-bar-info" style="width: <span id=" scheduledAirMinutesStats "></span>%"></div>
-  <div class="progress-bar progress-bar-warning" style="width: <span id=" scheduledTaxiInMinutesStats "></span>%"></div>
-</div>
+<div id="scheduledAirProgressBar"></span>
 
 <h2>Food Near My Gate</h2>
 
