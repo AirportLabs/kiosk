@@ -249,7 +249,7 @@ function flightMap(path) {
 
   var mapOptions = {
     zoom: 6,
-    center: new google.maps.LatLng(36.1667, -86.7833),
+    center: new google.maps.LatLng(38.85, -77.0333),
     mapTypeId: google.maps.MapTypeId.TERRAIN,
     panControl: false,
     mapTypeControl: false,
@@ -302,4 +302,18 @@ function flightMap(path) {
 
   flightPath.setMap(map);
 
+  // re-center the map based on the flight path (polyline)
+  var geoPointStart = path.shift();
+  var geoPointEnd = path.pop();
+  var startGeoPoint = new google.maps.LatLng(geoPointStart.lat, geoPointStart.lon);
+  var endGeoPoint = new google.maps.LatLng(geoPointEnd.lat, geoPointEnd.lon);
+  var bounds = new google.maps.LatLngBounds();
+  bounds.extend(endGeoPoint);
+  bounds.extend(startGeoPoint);
+  map.fitBounds(bounds);
+
+};
+
+function loadNearGate(terminal, gate) {
+  // src: http://www.metwashairports.com/reagan/6796.htm
 };
