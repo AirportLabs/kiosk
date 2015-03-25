@@ -10,13 +10,23 @@
     <span id="phoneNumber"></span>
   </small>
 </p>
-<p>Departs at
-  <mark>
-    <span id="publishedDeparture"></span>
-  </mark> with an expected arrival at
-  <mark>
-    <span id="estimatedGateArrival"></span>
-  </mark>
+<p>
+  <small>Departs
+    <strong>
+      <span id="departureAirport"></span> (Gate
+      <span id="departureGate"></span>)
+    </strong> at
+    <mark>
+      <span id="publishedDeparture"></span>
+    </mark> with an expected arrival to
+    <strong>
+      <span id="destinationAirport"></span> (Gate
+      <span id="destinationGate"></span>)
+    </strong> at
+    <mark>
+      <span id="estimatedGateArrival"></span>
+    </mark>
+  </small>
 </p>
 
 <h2>Flight Performance</h2>
@@ -30,6 +40,10 @@
 <h2>Equiptment</h2>
 <p>
   <span id="equipment"></span>
+  <br>
+  <small>Tail number:
+    <span id="tailNumber"></span>
+  </small>
 </p>
 
 <ul class="list-group">
@@ -94,7 +108,7 @@
   <small><i><span class="text-muted">time in the air: <span id="scheduledAirMinutes"></span> minutes</span></i></small>
 </p>
 
-<div id="scheduledAirProgressBar"></span>
+<div id="scheduledAirProgressBar"></div>
 
 <h2>Food Near My Gate</h2>
 
@@ -102,3 +116,31 @@
 <p>Gordon Biersch</p>
 <p>Cinnabon</p>
 <p>...</p>
+
+<h2>Arrival Information</h2>
+<p>Local time:
+  <span id="localTime"></span>
+</p>
+<p>Baggage claim:
+  <span id="baggageClaim"></span>
+</p>
+<h4>Weather</h4>
+<p>
+  <span id="weather"></span>
+</p>
+<p>
+  <span id="temp"></span>
+</p>
+<p>
+  Wind:
+  <span id="wind"></span>
+</p>
+<p>
+  Visibility:
+  <span id="visibility"></span> miles
+</p>
+
+<h2>Flight Route</h2>
+<div class="popin">
+  <div id="map-canvas"></div>
+</div>
