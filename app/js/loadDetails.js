@@ -1,5 +1,8 @@
 'use strict';
 
+// Authorize Parse SDK
+Parse.initialize("3McDuSZ3koaEsVun7kJ2UhueydINWHMg1YfkCB6U", "7gR1WkaApuMum3Sc6FgVo6g8DMVNWzfjVlDsFBQD");
+
 function loadDetails(IATA, flightNumber) {
 
   console.log('loadDetails() IATA: ' + IATA);
@@ -58,6 +61,20 @@ function loadDetails(IATA, flightNumber) {
       // Gate departing from
       $("#departureGate").text(flightStats.airportResources.departureTerminal + "-" + flightStats.airportResources.departureGate);
 
+      // send gate information to load food & dining options
+
+      var gate = flightStats.airportResources.departureGate;
+      if (gate > 34 || gate === "35X") {
+        var gateLocation = 'Terminal C'
+      } else if (gate > 22 && gate < 35) {
+        var gateLocation = 'Terminal B/C'
+      } else if (gate > 9 && gate < 23) {
+        var gateLocation = 'Terminal B'
+      } else if (gate < 10) {
+        var gateLocation = 'Terminal A'
+      };
+      loadNearGate(gateLocation);
+
       var destinationAirport = results.appendix.airports[1];
 
       // The name of the destination airport (String).
@@ -65,10 +82,6 @@ function loadDetails(IATA, flightNumber) {
 
       // Gate arriving at
       $("#destinationGate").text(flightStats.airportResources.arrivalTerminal + "-" + flightStats.airportResources.arrivalGate);
-
-      // Local time at destination airport
-      var localTime = moment(destinationAirport.localTime).format("LT");
-      $("#localTime").text(localTime);
 
       // Baggage claim at destination airport
       var baggageClaim = flightStats.airportResources.baggage;
@@ -102,38 +115,6 @@ function loadDetails(IATA, flightNumber) {
 
       // Tail number for flight
       $("#tailNumber").text(flightStats.flightEquipment.tailNumber);
-
-      // Boolean value indicating if the equipment type uses TurboProp propulsion (Boolean).
-      if (equipments.turboProp === true) {
-        var turboProp = 'Yes'
-      } else {
-        var turboProp = 'No'
-      };
-      $("#turboProp").text(turboProp);
-
-      // Boolean value indicating if the equipment type uses jet propulsion (Boolean).
-      if (equipments.jet === true) {
-        var jet = 'Yes'
-      } else {
-        var jet = 'No'
-      };
-      $("#jet").text(jet);
-
-      // Boolean value indicating if the equipment type is a wide-body airframe (Boolean).
-      if (equipments.widebody === true) {
-        var widebody = 'Yes'
-      } else {
-        var widebody = 'No'
-      };
-      $("#widebody").text(widebody);
-
-      // Boolean value indicating if the equipment type is a regional airframe (Boolean).
-      if (equipments.regional === true) {
-        var regional = 'Yes'
-      } else {
-        var regional = 'No'
-      };
-      $("#regional").text(regional);
 
       // // The current status of the flight.
       // // [A] Active
@@ -314,6 +295,29 @@ function flightMap(path) {
 
 };
 
-function loadNearGate(terminal, gate) {
-  // src: http://www.metwashairports.com/reagan/6796.htm
+function loadNearGate(gateLocation) {
+  console.log('gateLocation: ' + gateLocation);
+  var Locations = Parse.Object.extend("DCAFoodAndRetail");
+  var query = new Parse.Query(Locations);
+  query.equalTo("Location", gateLocation);
+  query.find({
+    success: function(results) {
+      console.log("Successfully retrieved " + results.length + " scores.");
+      for (var i = 0; i < results.length; i++) {
+        var object = results[i];
+        if (object.get('Type') === "Eateries & Snacks") {
+          $("#food").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+        } else if (object.get('Type') === "Newsstands") {
+          $("#retail").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+        } else if (object.get('Type') === "Sit Down Restaurants & Bars") {
+          $("#food").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+        } else {
+          $("#retail").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+        };
+      }
+    },
+    error: function(error) {
+      alert("Error: " + error.code + " " + error.message);
+    }
+  });
 };

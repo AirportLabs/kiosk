@@ -10,29 +10,34 @@
     <span id="phoneNumber"></span>
   </small>
 </p>
+
+<p>
+  <small>
+    <span id="departureAirport"></span> to
+    <span id="destinationAirport"></span>
+  </small>
+</p>
+
 <p>
   <small>Departs
     <strong>
-      <span id="departureAirport"></span> (Gate
-      <span id="departureGate"></span>)
+      <span id="departureGate"></span>
     </strong> at
-    <mark>
-      <span id="publishedDeparture"></span>
-    </mark> with an expected arrival to
     <strong>
-      <span id="destinationAirport"></span> (Gate
-      <span id="destinationGate"></span>)
+      <span id="publishedDeparture"></span>
+    </strong> with an expected arrival to
+    <strong>
+      <span id="destinationGate"></span>
     </strong> at
-    <mark>
+    <strong>
       <span id="estimatedGateArrival"></span>
-    </mark>
+    </strong>
   </small>
 </p>
 
 <h2>Flight Performance</h2>
 <p>
-  Percent On-time:
-  <span id="ontimePercent"></span>
+  <span id="ontimePercent"></span> on-time
   <br>
   <input id="allOntimeStars" class="rating" data-readonly="true" data-glyphicon="false" data-rating-class="rating-fa" data-size="xs" data-show-clear="false" data-show-caption="true">
 </p>
@@ -41,39 +46,11 @@
 <p>
   <span id="equipment"></span>
   <br>
-  <small>Tail number:
-    <span id="tailNumber"></span>
+  <small>(tail number:
+    <span id="tailNumber"></span>)
   </small>
 </p>
 
-<ul class="list-group">
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="jet"></span>
-    </span>
-    Jet
-  </li>
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="turboProp"></span>
-    </span>
-    Turboprop
-  </li>
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="widebody"></span>
-    </span>
-    Twin-aisle aircraft (widebody)
-  </li>
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="regional"></span>
-    </span>
-    Regional airliner/airplane
-  </li>
-</ul>
-
-<h2>Service Classes</h2>
 <ul class="list-group">
   <li class="list-group-item">
     <span class="badge">
@@ -110,17 +87,18 @@
 
 <div id="scheduledAirProgressBar"></div>
 
-<h2>Food Near My Gate</h2>
+<h2>Shopping & Dining</h2>
 
-<p>Five Guys</p>
-<p>Gordon Biersch</p>
-<p>Cinnabon</p>
-<p>...</p>
+<p>(near your gate)</p>
+
+<h4>Eateries & Snacks</h4>
+<ul id="food" class="list-group"></ul>
+
+<h4>Retail</h4>
+<ul id="retail" class="list-group"></ul>
 
 <h2>Arrival Information</h2>
-<p>Local time:
-  <span id="localTime"></span>
-</p>
+
 <p>Baggage claim:
   <span id="baggageClaim"></span>
 </p>
