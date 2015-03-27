@@ -19,13 +19,9 @@ flights.SY = [];
 
 $(document).ready(function() {
 
-  var now = moment();
-  console.log('now: ' + now);
-
   $.ajax({
-    // url: "http://www.mwaa.com/net/data/departures_reagan.json"
-      // url: "http://localhost:9000/mock/departures_reagan.json"
-      url: "https://raw.githubusercontent.com/AirportLabs/kiosk/gh-pages/mock/departures_reagan.json"
+    url: "http://www.mwaa.com/net/data/departures_reagan.json"
+    // url: "http://localhost:9000/mock/departures_reagan.json"
   }).then(function(results) {
 
     for (var i = 0; i < results.length; i++) {
@@ -34,11 +30,8 @@ $(document).ready(function() {
 
       // console.log(flight);
 
-      var departureDate = moment(flight.Actual);
-      console.log(departureDate);
-
       // skip record if flight has already departed
-      if (flight.Status != "Departed" && now < departureDate) {
+      if (flight.Status != "Departed") {
 
         async.parallel({
 
