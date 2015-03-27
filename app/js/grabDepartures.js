@@ -19,26 +19,17 @@ flights.SY = [];
 
 $(document).ready(function() {
 
-  // $.ajax({
-  //   url: "http://localhost:9000/mock/departures_reagan.json"
-  // }).then(function(data) {
-  //
-  //   // $('.greeting-id').append(data.id);
-  //   // $('.greeting-content').append(data.content);
-  //
-  //   $.each(data, function(index, value) {
-  //     console.log(index + ": " + value);
-  //   });
-  //
-  // });
-
   $.ajax({
-    url: "http://localhost:9000/mock/departures_reagan.json"
+    // url: "http://www.mwaa.com/net/data/departures_reagan.json"
+    // url: "http://localhost:9000/mock/departures_reagan.json"
+    url: "/mock/departures_reagan.json"
   }).then(function(results) {
 
     for (var i = 0; i < results.length; i++) {
 
       var flight = results[i];
+
+      // console.log(flight);
 
       // skip record if flight has already departed
       if (flight.Status != "Departed") {

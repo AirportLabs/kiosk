@@ -12,8 +12,8 @@ function loadDetails(IATA, flightNumber) {
 
     // get flight ratings
     $.ajax({
-      // url: 'https://api.flightstats.com/flex/ratings/rest/v1/json/flight/' + carrier + '/' + flightNumber + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d'
-      url: "http://localhost:9000/mock/RatingsAPI.json"
+      url: 'https://api.flightstats.com/flex/ratings/rest/v1/json/flight/' + IATA + '/' + flightNumber + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d'
+        // url: "http://localhost:9000/mock/RatingsAPI.json"
     }).then(function(results) {
       var ratings = results.ratings[0];
       // percent on-time
@@ -25,9 +25,12 @@ function loadDetails(IATA, flightNumber) {
     });
 
     // get flight stats
+    var year = moment().year();
+    var month = moment().month() + 1;
+    var date = moment().date();
     $.ajax({
-      // url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/' + carrier + '/' + flightNumber + '/dep/' + year + '/' + month + '/' + date + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&utc=false&airport=DCA'
-      url: "http://localhost:9000/mock/FlightStatusAPI.json"
+      url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/' + IATA + '/' + flightNumber + '/dep/' + year + '/' + month + '/' + date + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&utc=false&airport=DCA'
+        // url: "http://localhost:9000/mock/FlightStatusAPI.json"
     }).then(function(results) {
 
       var airlines = results.appendix.airlines[0];
@@ -44,13 +47,16 @@ function loadDetails(IATA, flightNumber) {
       var flightStats = results.flightStatuses[0];
 
       var operationalTimes = flightStats.operationalTimes;
+      console.log(operationalTimes);
 
       // The published departure time for the flight provided by the airline's published operating schedule.
       var publishedDeparture = moment(operationalTimes.publishedDeparture.dateLocal).format("LT");
       $("#publishedDeparture").text(publishedDeparture);
 
       // An estimated gate arrival time based on current observations
-      var estimatedGateArrival = moment(operationalTimes.estimatedGateArrival.dateLocal).format("LT");
+      var dateLocal;
+      dateLocal = operationalTimes.scheduledGateArrival.dateLocal;
+      var estimatedGateArrival = moment(dateLocal).format("LT");
       $("#estimatedGateArrival").text(estimatedGateArrival);
 
       var departureAirport = results.appendix.airports[0];
@@ -80,8 +86,15 @@ function loadDetails(IATA, flightNumber) {
       // The name of the destination airport (String).
       $("#destinationAirport").text(destinationAirport.name);
 
+      var arrivingTerminal = flightStats.airportResources.arrivalTerminal;
+      var arrivingGate = flightStats.airportResources.arrivalGate;
+
       // Gate arriving at
-      $("#destinationGate").text(flightStats.airportResources.arrivalTerminal + "-" + flightStats.airportResources.arrivalGate);
+      if (arrivingTerminal != undefined) {
+        $("#destinationGate").text(arrivingTerminal + "-" + arrivingGate);
+      } else {
+        $("#destinationGate").text(arrivingGate);
+      }
 
       // Baggage claim at destination airport
       var baggageClaim = flightStats.airportResources.baggage;
@@ -217,8 +230,8 @@ var flightPlanCoordinates = [];
 // load flight route
 function loadRoute(flightId) {
   $.ajax({
-    // url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/track/' + flightId + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&includeFlightPlan=true&maxPositions=2'
-    url: "http://localhost:9000/mock/flightRoute.json"
+    url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/track/' + flightId + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&includeFlightPlan=true&maxPositions=2'
+      // url: "http://localhost:9000/mock/flightRoute.json"
   }).then(function(tracks) {
     var waypoints = tracks.flightTrack.waypoints;
     flightMap(waypoints);
