@@ -12,8 +12,15 @@ function loadDetails(IATA, flightNumber) {
 
     // get flight ratings
     $.ajax({
-      url: 'https://api.flightstats.com/flex/ratings/rest/v1/json/flight/' + IATA + '/' + flightNumber + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d'
-        // url: "http://localhost:9000/mock/RatingsAPI.json"
+
+      // standard URL for use with CORS Google Chrome entension
+      // url: 'https://api.flightstats.com/flex/ratings/rest/v1/json/flight/' + IATA + '/' + flightNumber + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d'
+
+      // URL for use without CORS Google Chrome entension
+      url: 'https://mwaa-repeater.herokuapp.com/flex/ratings/rest/v1/json/flight/' + IATA + '/' + flightNumber + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d'
+
+      // url: "http://localhost:9000/mock/RatingsAPI.json"
+
     }).then(function(results) {
       var ratings = results.ratings[0];
       // percent on-time
@@ -29,8 +36,15 @@ function loadDetails(IATA, flightNumber) {
     var month = moment().month() + 1;
     var date = moment().date();
     $.ajax({
-      url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/' + IATA + '/' + flightNumber + '/dep/' + year + '/' + month + '/' + date + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&utc=false&airport=DCA'
-        // url: "http://localhost:9000/mock/FlightStatusAPI.json"
+
+      // standard URL for use with CORS Google Chrome entension
+      // url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/' + IATA + '/' + flightNumber + '/dep/' + year + '/' + month + '/' + date + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&utc=false&airport=DCA'
+
+      // URL for use without CORS Google Chrome entension
+      url: 'https://mwaa-repeater.herokuapp.com/flex/flightstatus/rest/v2/json/flight/status/' + IATA + '/' + flightNumber + '/dep/' + year + '/' + month + '/' + date + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&utc=false&airport=DCA'
+
+      // url: "http://localhost:9000/mock/FlightStatusAPI.json"
+
     }).then(function(results) {
 
       var airlines = results.appendix.airlines[0];
@@ -230,8 +244,16 @@ var flightPlanCoordinates = [];
 // load flight route
 function loadRoute(flightId) {
   $.ajax({
-    url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/track/' + flightId + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&includeFlightPlan=true&maxPositions=2'
-      // url: "http://localhost:9000/mock/flightRoute.json"
+
+    // standard URL for use with CORS Google Chrome entension
+    // url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/track/' + flightId + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&includeFlightPlan=true&maxPositions=2'
+
+    // URL for use without CORS Google Chrome entension
+    url: 'https://mwaa-repeater.herokuapp.com/flex/flightstatus/rest/v2/json/flight/track/' + flightId + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&includeFlightPlan=true&maxPositions=2'
+
+    //
+    // url: "http://localhost:9000/mock/flightRoute.json"
+
   }).then(function(tracks) {
     var waypoints = tracks.flightTrack.waypoints;
     flightMap(waypoints);

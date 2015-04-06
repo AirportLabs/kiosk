@@ -20,7 +20,8 @@ flights.SY = [];
 $(document).ready(function() {
 
   $.ajax({
-    url: "http://www.mwaa.com/net/data/departures_reagan.json"
+    // use CORS-enabled repeater for http://www.mwaa.com/net/data/departures_reagan.json
+    url: "https://mwaa-repeater.herokuapp.com/"
     // url: "http://localhost:9000/mock/departures_reagan.json"
   }).then(function(results) {
 
