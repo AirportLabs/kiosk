@@ -227,17 +227,29 @@ function loadDetails(IATA, flightNumber) {
 
 };
 
+// // get weater at destination airport
+// function destinationWeather(destIATA) {
+//   $.ajax({
+//     url: "http://services.faa.gov/airport/status/" + destIATA + "?format=application/json"
+//   }).then(function(response) {
+//     $("#wind").text(response.weather.wind);
+//     $("#temp").text(response.weather.temp);
+//     $("#weather").text(response.weather.weather);
+//     $("#visibility").text(response.weather.visibility);
+//   })
+// };
+
 // get weater at destination airport
 function destinationWeather(destIATA) {
-  $.ajax({
-    url: "http://services.faa.gov/airport/status/" + destIATA + "?format=application/json"
-  }).then(function(response) {
-    $("#wind").text(response.weather.wind);
-    $("#temp").text(response.weather.temp);
-    $("#weather").text(response.weather.weather);
-    $("#visibility").text(response.weather.visibility);
-  })
+  $.getJSON("http://services.faa.gov/airport/status/" + destIATA + "?format=application/json", function(data) {
+    console.log(data);
+    $("#wind").text(data.weather.wind);
+    $("#temp").text(data.weather.temp);
+    $("#weather").text(data.weather.weather);
+    $("#visibility").text(data.weather.visibility);
+  });
 };
+
 
 var flightPlanCoordinates = [];
 
