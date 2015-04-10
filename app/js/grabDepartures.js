@@ -99,7 +99,7 @@ $(document).ready(function() {
 
     }
 
-    // console.log(flights);
+    console.log(flights);
 
   });
 
