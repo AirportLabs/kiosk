@@ -72,106 +72,84 @@
         <span class="icon-bar"></span>
       </a>
     </div>
-    <div class="navbar-collapse collapse">
-      <!-- <ul class="nav navbar-nav">
-        <li><a href="#">Select Flight</a></li>
-      </ul> -->
-    </div>
   </div>
 
-  <div class="container-fluid" id="main">
-    <!-- <div class="container" id="main"> -->
+  <div class="container-fluid row" id="main">
 
-    <div class="row">
+    <div id="primaryContent">
 
-      <div class="col-md-7">
-
-        <div class="row">
-          <p></p>
-        </div>
-
-        <div id="primaryContent">
-
-          <div class="panel panel-default">
-            <div class="panel-heading"><a href="">Select Airline</a></div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-
-              <div class="list-group">
-                <a onclick="loadAirline('AC')" class="list-group-item">
-                  <center>
-                    <img src="img/air_canada.png" alt="Air Canada" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('AS')" class="list-group-item">
-                  <center>
-                    <img src="img/alaska_airlines.png" alt="Alaska Airlines" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('AA')" class="list-group-item">
-                  <center>
-                    <img src="img/american_airlines.png" alt="American Airlines" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('DL')" class="list-group-item">
-                  <center>
-                    <img src="img/delta_airlines.png" alt="Delta Airlines" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('F9')" class="list-group-item">
-                  <center>
-                    <img src="img/frontier_airlines.png" alt="Frontier Airlines" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('B6')" class="list-group-item">
-                  <center>
-                    <img src="img/jetBlue.png" alt="jetBlue" align="middle" height="40">
-                  </center>
-                </a>
-              </div>
-
-            </div>
-            <div class="col-md-6">
-
-              <div class="list-group">
-                <a onclick="loadAirline('WN')" class="list-group-item">
-                  <center>
-                    <img src="img/southwest.png" alt="Southwest" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('SY')" class="list-group-item">
-                  <center>
-                    <img src="img/sun_country_airlines.png" alt="Sun Country Airlines" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('UA')" class="list-group-item">
-                  <center>
-                    <img src="img/united_airlines.png" alt="United Airlines" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('US')" class="list-group-item">
-                  <center>
-                    <img src="img/us_airways.png" alt="US Airways" align="middle" height="40">
-                  </center>
-                </a>
-                <a onclick="loadAirline('VX')" class="list-group-item">
-                  <center>
-                    <img src="img/virgin_america.png" alt="Virgin America" align="middle" height="40">
-                  </center>
-                </a>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
+      <div class="panel panel-default">
+        <div class="panel-heading"><a href="">Select Airline</a></div>
       </div>
 
-      <div class="col-md-5 map">
-        <div id="map-canvas"></div>
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="list-group">
+            <a onclick="loadAirline('AC')" class="list-group-item">
+              <center>
+                <img src="img/air_canada.png" alt="Air Canada" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('AS')" class="list-group-item">
+              <center>
+                <img src="img/alaska_airlines.png" alt="Alaska Airlines" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('AA')" class="list-group-item">
+              <center>
+                <img src="img/american_airlines.png" alt="American Airlines" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('DL')" class="list-group-item">
+              <center>
+                <img src="img/delta_airlines.png" alt="Delta Airlines" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('F9')" class="list-group-item">
+              <center>
+                <img src="img/frontier_airlines.png" alt="Frontier Airlines" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('B6')" class="list-group-item">
+              <center>
+                <img src="img/jetBlue.png" alt="jetBlue" align="middle" height="40">
+              </center>
+            </a>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+
+          <div class="list-group">
+            <a onclick="loadAirline('WN')" class="list-group-item">
+              <center>
+                <img src="img/southwest.png" alt="Southwest" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('SY')" class="list-group-item">
+              <center>
+                <img src="img/sun_country_airlines.png" alt="Sun Country Airlines" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('UA')" class="list-group-item">
+              <center>
+                <img src="img/united_airlines.png" alt="United Airlines" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('US')" class="list-group-item">
+              <center>
+                <img src="img/us_airways.png" alt="US Airways" align="middle" height="40">
+              </center>
+            </a>
+            <a onclick="loadAirline('VX')" class="list-group-item">
+              <center>
+                <img src="img/virgin_america.png" alt="Virgin America" align="middle" height="40">
+              </center>
+            </a>
+          </div>
+
+        </div>
       </div>
 
     </div>
