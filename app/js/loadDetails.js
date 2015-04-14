@@ -36,6 +36,16 @@ function loadDetails(IATA, flightNumber) {
 
       // The published departure time for the flight provided by the airline's published operating schedule.
       $("#publishedDeparture").text(results.compiledStats.publishedDeparture);
+      console.log('flight departure: ' + results.compiledStats.publishedDeparture);
+
+      // Get estimated boarding time
+      var boardingTime = moment("11:59 AM", "LT");
+      boardingTime.subtract(30, 'minutes').minutes();
+      console.log('boardingTime: ' + boardingTime._d);
+      // var now = moment();
+      var boardingStart = moment(boardingTime).fromNow();
+      console.log(boardingStart);
+      $("#boardingStart").text(boardingStart);
 
       // An estimated gate arrival time based on current observations
       $("#estimatedGateArrival").text(results.compiledStats.estimatedGateArrival);
@@ -51,7 +61,7 @@ function loadDetails(IATA, flightNumber) {
 
       var scheduledAirProgressBar = '<div class="progress">'
       scheduledAirProgressBar += '<div class="progress-bar progress-bar-warning" style="width: ' + results.compiledStats.scheduledTaxiOutMinutesStats + '%"></div>';
-      scheduledAirProgressBar += '<div class="progress-bar progress-bar-info" style="width: ' + results.compiledStats.scheduledAirMinutesStats + '%"></div>';
+      scheduledAirProgressBar += '<div class="progress-bar progress-bar-info" style="width: ' + results.compiledStats.scheduledAirMinutesStats + '%">in the air</div>';
       scheduledAirProgressBar += '<div class="progress-bar progress-bar-warning" style="width: ' + results.compiledStats.scheduledTaxiInMinutesStats + '%"></div>';
       scheduledAirProgressBar += '</div>';
       $("#scheduledAirProgressBar").html(scheduledAirProgressBar);
@@ -62,10 +72,10 @@ function loadDetails(IATA, flightNumber) {
       // Tail number for flight
       $("#tailNumber").text(results.compiledStats.tailNumber);
 
-      $("#firstClass").text(results.compiledStats.firstClass);
-      $("#businessClass").text(results.compiledStats.businessClass);
-      $("#premiumEconomyClass").text(results.compiledStats.premiumEconomyClass);
-      $("#economyClass").text(results.compiledStats.economyClass);
+      // $("#firstClass").text(results.compiledStats.firstClass);
+      // $("#businessClass").text(results.compiledStats.businessClass);
+      // $("#premiumEconomyClass").text(results.compiledStats.premiumEconomyClass);
+      // $("#economyClass").text(results.compiledStats.economyClass);
 
       // send gate information to load food & dining options
       loadNearGate(results.compiledStats.gateLocation);
@@ -85,7 +95,7 @@ function loadDetails(IATA, flightNumber) {
       // weather at destination airport
       $("#wind").text(results.weather.wind);
       $("#temp").text(results.weather.temp);
-      $("#weather").text(results.weather.weather);
+      $("#weather").text(results.weather.type);
       $("#visibility").text(results.weather.visibility);
 
       // build flight map
@@ -100,6 +110,65 @@ function loadDetails(IATA, flightNumber) {
 
 // load flight route map
 function flightMap(path) {
+
+  // build starting route
+  var route = [];
+
+  // starting gate
+  var waypoint = {};
+  waypoint.lon = -77.041600;
+  waypoint.lat = 38.852477;
+  route.push(waypoint);
+
+  // rotate point
+  var waypoint = {};
+  waypoint.lon = -77.041842;
+  waypoint.lat = 38.852972;
+  route.push(waypoint);
+
+  // turn onto taxi way
+  var waypoint = {};
+  waypoint.lon = -77.039671;
+  waypoint.lat = 38.853494;
+  route.push(waypoint);
+
+  // turn point
+  var waypoint = {};
+  waypoint.lon = -77.038352;
+  waypoint.lat = 38.843039;
+  route.push(waypoint);
+
+  // start of runway 1
+  var waypoint = {};
+  waypoint.lon = -77.036910;
+  waypoint.lat = 38.843109;
+  route.push(waypoint);
+
+  // end of runway 1 (Gravelly Point)
+  var waypoint = {};
+  waypoint.lon = -77.038927;
+  waypoint.lat = 38.866278;
+  route.push(waypoint);
+
+  // Gets all but the first element of path
+  var editedPath = _.rest(path);
+
+  // merge route with editedPath
+  for (var i = 0; i < editedPath.length; i++) {
+    var waypoint = editedPath[i];
+    route.push(waypoint);
+  };
+
+  // remove the first (starting) coordinates
+  // var route = path.shift();
+  // var route = path.shift();
+  // var route = path;
+
+  // var first = _.first(route);
+  // console.log(first);
+
+  // add new coordinates to the route/path
+  // route = route.unshift({lon:,lat:},{lon:,lat:});
 
   var mapOptions = {
     zoom: 6,
@@ -140,9 +209,15 @@ function flightMap(path) {
     styles: styles
   });
 
+  // var flightPlanCoordinates = new Array();
+  // for (var i = 0; i < path.length; i++) {
+  //   var waypoint = path[i];
+  //   flightPlanCoordinates.push(new google.maps.LatLng(waypoint.lat, waypoint.lon));
+  // };
+
   var flightPlanCoordinates = new Array();
-  for (var i = 0; i < path.length; i++) {
-    var waypoint = path[i];
+  for (var i = 0; i < route.length; i++) {
+    var waypoint = route[i];
     flightPlanCoordinates.push(new google.maps.LatLng(waypoint.lat, waypoint.lon));
   };
 
@@ -180,13 +255,13 @@ function loadNearGate(gateLocation) {
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.get('Type') === "Eateries & Snacks") {
-          $("#food").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#food").append('<li>' + object.get('Name') + '</li>');
         } else if (object.get('Type') === "Newsstands") {
-          $("#retail").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#retail").append('<li>' + object.get('Name') + '</li>');
         } else if (object.get('Type') === "Sit Down Restaurants & Bars") {
-          $("#food").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#food").append('<li>' + object.get('Name') + '</li>');
         } else {
-          $("#retail").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#retail").append('<li>' + object.get('Name') + '</li>');
         };
       }
     },

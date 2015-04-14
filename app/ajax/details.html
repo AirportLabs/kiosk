@@ -7,12 +7,24 @@
       <!-- *** START NEW LAYOUT -->
       <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-6">
 
           <h2>
             <span id="airlineName"></span>
             <span id="flightNumber"></span>
           </h2>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <!-- <p class="text-right"> -->
+          <h2>
+            <small>Customer Service Number:
+              <span id="phoneNumber"></span>
+            </small>
+          </h2>
+          <!-- </p> -->
 
         </div>
 
@@ -32,7 +44,7 @@
                 <small>at</small>
                 <span id="publishedDeparture"></span>
                 <br>
-                <small>Boarding starts in 42 mins</small>
+                <small>Boarding starts in <span id="boardingStart"></span> (estimated)</small>
               </h2>
 
             </div>
@@ -55,24 +67,81 @@
                 <small>Baggage Claim |
                   <span id="baggageClaim"></span>
                 </small>
-
-                <h4>Weather</h4>
-                <p>
-                  <span id="weather"></span>
-                </p>
-                <p>
-                  <span id="temp"></span>
-                </p>
-                <p>
-                  Wind:
-                  <span id="wind"></span>
-                </p>
-                <p>
-                  Visibility:
-                  <span id="visibility"></span> miles
-                </p>
-
               </h2>
+
+              <div class="row">
+
+                <div class="col-md-3">
+                  Weather
+                  <span class="badge">
+                    <span id="weather"></span>
+                  </span>
+                </div>
+
+                <div class="col-md-3">
+                  Temp
+                  <span class="badge">
+                    <span id="temp"></span>
+                  </span>
+                </div>
+
+                <div class="col-md-3">
+                  Wind
+                  <span class="badge">
+                    <span id="wind"></span>
+                  </span>
+                </div>
+
+                <div class="col-md-3">
+                  Visibility
+                  <span class="badge">
+                    <span id="visibility"></span> miles
+                  </span>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">Near Your Gate</div>
+            <div class="panel-body">
+
+              <div class="row">
+
+                <div class="col-md-6">
+
+                  <div class="well well-sm">
+                    <p>
+                      <strong>Eateries & Snacks</strong>
+                    </p>
+                    <ul id="food"></ul>
+                  </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                  <div class="well well-sm">
+                    <p>
+                      <strong>Retail</strong>
+                    </p>
+                    <ul id="retail"></ul>
+                  </div>
+
+                </div>
+
+              </div>
 
             </div>
           </div>
@@ -144,75 +213,6 @@
       <!-- *** END NEW LAYOUT -->
 
       <div id="primaryContent">
-
-        <p>
-          <span id="departureAirport"></span> to
-          <span id="destinationAirport"></span>
-        </p>
-
-        <!-- item list -->
-        <div class="panel panel-default">
-          <div class="panel-heading">Gate Information</div>
-        </div>
-
-        <p>(near your gate)</p>
-
-        <h4>Eateries & Snacks</h4>
-        <ul id="food" class="list-group"></ul>
-
-        <h4>Retail</h4>
-        <ul id="retail" class="list-group"></ul>
-
-        <hr>
-
-        <div class="panel panel-default">
-          <div class="panel-heading">About Your Flight</div>
-        </div>
-
-
-
-        <ul class="list-group">
-          <li class="list-group-item">
-            <span class="badge">
-              <span id="firstClass"></span>
-            </span>
-            First Class
-          </li>
-          <li class="list-group-item">
-            <span class="badge">
-              <span id="businessClass"></span>
-            </span>
-            Business Class
-          </li>
-          <li class="list-group-item">
-            <span class="badge">
-              <span id="premiumEconomyClass"></span>
-            </span>
-            Premium Economy
-          </li>
-          <li class="list-group-item">
-            <span class="badge">
-              <span id="economyClass"></span>
-            </span>
-            Economy Class
-          </li>
-        </ul>
-
-
-
-        <hr>
-
-        <div class="panel panel-default">
-          <div class="panel-heading">Customer Service Information</div>
-        </div>
-
-        <p>
-          <small>Customer Service Number:
-            <span id="phoneNumber"></span>
-          </small>
-        </p>
-
-        <hr>
 
       </div>
 
