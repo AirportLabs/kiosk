@@ -4,16 +4,146 @@
 
     <div class="col-md-7">
 
+      <!-- *** START NEW LAYOUT -->
       <div class="row">
-        <p></p>
+
+        <div class="col-md-12">
+
+          <h2>
+            <span id="airlineName"></span>
+            <span id="flightNumber"></span>
+          </h2>
+
+        </div>
+
       </div>
 
-      <div id="primaryContent">
+      <div class="row">
 
-        <h2>
-          <span id="airlineName"></span>
-          <span id="flightNumber"></span>
-        </h2>
+        <div class="col-md-6">
+
+          <!-- departure information -->
+          <div class="panel panel-default">
+            <div class="panel-heading">Departure Information</div>
+            <div class="panel-body">
+
+              <h2>Departs
+                <span id="departureGate"></span>
+                <small>at</small>
+                <span id="publishedDeparture"></span>
+                <br>
+                <small>Boarding starts in 42 mins</small>
+              </h2>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <!-- arrival information -->
+          <div class="panel panel-default">
+            <div class="panel-heading">Arrival Information</div>
+            <div class="panel-body">
+
+              <h2>Arrives
+                <span id="destinationGate"></span>
+                <small>at</small>
+                <span id="estimatedGateArrival"></span>
+                <br>
+                <small>Baggage Claim |
+                  <span id="baggageClaim"></span>
+                </small>
+
+                <h4>Weather</h4>
+                <p>
+                  <span id="weather"></span>
+                </p>
+                <p>
+                  <span id="temp"></span>
+                </p>
+                <p>
+                  Wind:
+                  <span id="wind"></span>
+                </p>
+                <p>
+                  Visibility:
+                  <span id="visibility"></span> miles
+                </p>
+
+              </h2>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <!-- flight information -->
+          <div class="panel panel-default">
+            <div class="panel-heading">About Your Flight</div>
+            <div class="panel-body">
+
+              <div class="row">
+
+                <div class="col-md-4">
+
+                  <h4>Flight Time</h4>
+
+                  <p>
+                    <span id="scheduledBlockMinutes"></span> minutes
+                    <br>
+                    <small><i><span class="text-muted">time in the air: <span id="scheduledAirMinutes"></span> minutes</span></i></small>
+                  </p>
+
+                  <div id="scheduledAirProgressBar"></div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <h4>Historical Performance</h4>
+
+                  <p>
+                    <span id="ontimePercent"></span> on-time
+                    <br>
+                    <input id="allOntimeStars" class="rating" data-readonly="true" data-glyphicon="false" data-rating-class="rating-fa" data-size="xs" data-show-clear="false" data-show-caption="true">
+                  </p>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <h4>Equiptment</h4>
+
+                  <p>
+                    <span id="equipment"></span>
+                    <br>
+                    <small>(tail number:
+                      <span id="tailNumber"></span>)
+                    </small>
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- *** END NEW LAYOUT -->
+
+      <div id="primaryContent">
 
         <p>
           <span id="departureAirport"></span> to
@@ -24,16 +154,6 @@
         <div class="panel panel-default">
           <div class="panel-heading">Gate Information</div>
         </div>
-
-        <p>
-          <h2>Departs
-            <span id="departureGate"></span>
-            <small>at</small>
-            <span id="publishedDeparture"></span>
-            <br>
-            <small>Boarding starts in 42 mins</small>
-          </h2>
-        </p>
 
         <p>(near your gate)</p>
 
@@ -46,54 +166,10 @@
         <hr>
 
         <div class="panel panel-default">
-          <div class="panel-heading">Arrival Information</div>
-        </div>
-        <p>Expected arrival at
-          <span id="estimatedGateArrival"></span> to gate
-          <span id="destinationGate"></span>
-        </p>
-
-        <p>Baggage claim:
-          <span id="baggageClaim"></span>
-        </p>
-
-        <h4>Weather</h4>
-        <p>
-          <span id="weather"></span>
-        </p>
-        <p>
-          <span id="temp"></span>
-        </p>
-        <p>
-          Wind:
-          <span id="wind"></span>
-        </p>
-        <p>
-          Visibility:
-          <span id="visibility"></span> miles
-        </p>
-
-        <hr>
-
-        <div class="panel panel-default">
           <div class="panel-heading">About Your Flight</div>
         </div>
 
-        <p>
-          <span id="scheduledBlockMinutes"></span> minutes
-          <br>
-          <small><i><span class="text-muted">time in the air: <span id="scheduledAirMinutes"></span> minutes</span></i></small>
-        </p>
 
-        <div id="scheduledAirProgressBar"></div>
-
-        <p>
-          <span id="equipment"></span>
-          <br>
-          <small>(tail number:
-            <span id="tailNumber"></span>)
-          </small>
-        </p>
 
         <ul class="list-group">
           <li class="list-group-item">
@@ -122,13 +198,7 @@
           </li>
         </ul>
 
-        <h2>Flight Performance</h2>
 
-        <p>
-          <span id="ontimePercent"></span> on-time
-          <br>
-          <input id="allOntimeStars" class="rating" data-readonly="true" data-glyphicon="false" data-rating-class="rating-fa" data-size="xs" data-show-clear="false" data-show-caption="true">
-        </p>
 
         <hr>
 
