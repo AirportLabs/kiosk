@@ -19,8 +19,6 @@ function loadDetails(IATA, flightNumber) {
 
     }).then(function(results) {
 
-      // $('#XXX').text(results.XXX);
-
       // The name of the carrier (String).
       $('#airlineName').text(results.compiledStats.airlineName);
 
@@ -89,6 +87,10 @@ function loadDetails(IATA, flightNumber) {
       $("#temp").text(results.weather.temp);
       $("#weather").text(results.weather.weather);
       $("#visibility").text(results.weather.visibility);
+
+      // build flight map
+      var path = results.route.waypoints;
+      flightMap(path);
 
     });
 
