@@ -12,10 +12,10 @@ function loadDetails(IATA, flightNumber) {
 
     $.ajax({
 
-      // url: 'https://kiosk-engine.herokuapp.com/flightstats/' + IATA + '/' + flightNumber + ''
+      url: 'https://kiosk-engine.herokuapp.com/flightstats/' + IATA + '/' + flightNumber + ''
 
       // URL for dev + mock data purposes
-      url: "https://kiosk-engine.herokuapp.com/sample"
+      // url: "https://kiosk-engine.herokuapp.com/sample"
 
     }).then(function(results) {
 
