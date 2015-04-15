@@ -2,7 +2,7 @@
 
 function loadAirline(IATA) {
 
-  $("#contentarea").load("ajax/flights.html", function() {
+  $("#primaryContent").load("ajax/flights.html", function() {
 
     $.each(flights[IATA], function(index, value) {
 

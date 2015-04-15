@@ -20,19 +20,20 @@ flights.SY = [];
 $(document).ready(function() {
 
   $.ajax({
-    // use CORS-enabled repeater for http://www.mwaa.com/net/data/departures_reagan.json
+    // using CORS-enabled repeater for http://www.mwaa.com/net/data/departures_reagan.json
     url: "https://mwaa-repeater.herokuapp.com/"
-    // url: "http://localhost:9000/mock/departures_reagan.json"
   }).then(function(results) {
+
+    var now = moment();
+    var nowPlus3hrs = now.add(3, 'hours');
+    console.log('nowPlus3hrs: ' + nowPlus3hrs._d);
 
     for (var i = 0; i < results.length; i++) {
 
       var flight = results[i];
 
-      // console.log(flight);
-
-      // skip record if flight has already departed
-      if (flight.Status != "Departed") {
+      // skip record if flight leaves in more than three hours from now AND has not been marked as departed
+      if (flight.Status != "Departed" && moment(flight.Scheduled).isBefore(nowPlus3hrs) === true) {
 
         async.parallel({
 
@@ -99,7 +100,7 @@ $(document).ready(function() {
 
     }
 
-    console.log(flights);
+    // console.log(flights);
 
   });
 

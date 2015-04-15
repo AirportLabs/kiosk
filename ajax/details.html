@@ -1,124 +1,219 @@
-<h1>
-  <span id="airlineName"></span>
-</h1>
-<h2>
-  Flight
-  <span id="flightNumber"></span>
-</h2>
-<p>
-  <small>Customer Service Number:
-    <span id="phoneNumber"></span>
-  </small>
-</p>
+<div class="container-fluid">
 
-<p>
-  <small>
-    <span id="departureAirport"></span> to
-    <span id="destinationAirport"></span>
-  </small>
-</p>
+  <div class="row">
 
-<p>
-  <small>Departs
-    <strong>
-      <span id="departureGate"></span>
-    </strong> at
-    <strong>
-      <span id="publishedDeparture"></span>
-    </strong> with an expected arrival to
-    <strong>
-      <span id="destinationGate"></span>
-    </strong> at
-    <strong>
-      <span id="estimatedGateArrival"></span>
-    </strong>
-  </small>
-</p>
+    <div class="col-md-7">
 
-<h2>Flight Performance</h2>
-<p>
-  <span id="ontimePercent"></span> on-time
-  <br>
-  <input id="allOntimeStars" class="rating" data-readonly="true" data-glyphicon="false" data-rating-class="rating-fa" data-size="xs" data-show-clear="false" data-show-caption="true">
-</p>
+      <div class="row">
 
-<h2>Equiptment</h2>
-<p>
-  <span id="equipment"></span>
-  <br>
-  <small>(tail number:
-    <span id="tailNumber"></span>)
-  </small>
-</p>
+        <div class="col-md-6">
 
-<ul class="list-group">
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="firstClass"></span>
-    </span>
-    First Class
-  </li>
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="businessClass"></span>
-    </span>
-    Business Class
-  </li>
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="premiumEconomyClass"></span>
-    </span>
-    Premium Economy
-  </li>
-  <li class="list-group-item">
-    <span class="badge">
-      <span id="economyClass"></span>
-    </span>
-    Economy Class
-  </li>
-</ul>
+          <h2>
+            <span id="airlineName"></span>
+            <span id="flightNumber"></span>
+          </h2>
 
-<h2>Flight Time</h2>
-<p>
-  <span id="scheduledBlockMinutes"></span> minutes
-  <br>
-  <small><i><span class="text-muted">time in the air: <span id="scheduledAirMinutes"></span> minutes</span></i></small>
-</p>
+        </div>
 
-<div id="scheduledAirProgressBar"></div>
+        <div class="col-md-6">
 
-<h2>Shopping & Dining</h2>
+          <!-- <p class="text-right"> -->
+          <h2>
+            <small>Customer Service Number:
+              <span id="phoneNumber"></span>
+            </small>
+          </h2>
+          <!-- </p> -->
 
-<p>(near your gate)</p>
+        </div>
 
-<h4>Eateries & Snacks</h4>
-<ul id="food" class="list-group"></ul>
+      </div>
 
-<h4>Retail</h4>
-<ul id="retail" class="list-group"></ul>
+      <div class="row">
 
-<h2>Arrival Information</h2>
+        <div class="col-md-6">
 
-<p>Baggage claim:
-  <span id="baggageClaim"></span>
-</p>
-<h4>Weather</h4>
-<p>
-  <span id="weather"></span>
-</p>
-<p>
-  <span id="temp"></span>
-</p>
-<p>
-  Wind:
-  <span id="wind"></span>
-</p>
-<p>
-  Visibility:
-  <span id="visibility"></span> miles
-</p>
+          <!-- departure information -->
+          <div class="panel panel-default">
+            <div class="panel-heading">Departure Information</div>
+            <div class="panel-body">
 
-<h2>Flight Route</h2>
-<div class="popin">
-  <div id="map-canvas"></div>
+              <h2>Departs
+                <span id="departureGate"></span>
+                <small>at</small>
+                <span id="publishedDeparture"></span>
+                <br>
+                <small>Boarding starts <span id="boardingStart"></span> (estimated)</small>
+              </h2>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <!-- arrival information -->
+          <div class="panel panel-default">
+            <div class="panel-heading">Arrival Information</div>
+            <div class="panel-body">
+
+              <h2>Arrives
+                <span id="destinationGate"></span>
+                <small>at</small>
+                <span id="estimatedGateArrival"></span>
+                <br>
+                <small>Baggage Claim |
+                  <span id="baggageClaim"></span>
+                </small>
+              </h2>
+
+              <div class="row">
+
+                <div class="col-md-3">
+                  Weather
+                  <span class="badge">
+                    <span id="weather"></span>
+                  </span>
+                </div>
+
+                <div class="col-md-3">
+                  Temp
+                  <span class="badge">
+                    <span id="temp"></span>
+                  </span>
+                </div>
+
+                <div class="col-md-3">
+                  Wind
+                  <span class="badge">
+                    <span id="wind"></span>
+                  </span>
+                </div>
+
+                <div class="col-md-3">
+                  Visibility
+                  <span class="badge">
+                    <span id="visibility"></span> miles
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">Near Your Gate</div>
+            <div class="panel-body">
+
+              <div class="row">
+
+                <div class="col-md-6">
+
+                  <div class="well well-sm">
+                    <p>
+                      <strong>Eateries & Snacks</strong>
+                    </p>
+                    <ul id="food"></ul>
+                  </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                  <div class="well well-sm">
+                    <p>
+                      <strong>Retail</strong>
+                    </p>
+                    <ul id="retail"></ul>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <!-- flight information -->
+          <div class="panel panel-default">
+            <div class="panel-heading">About Your Flight</div>
+            <div class="panel-body">
+
+              <div class="row">
+
+                <div class="col-md-4">
+
+                  <h4>Flight Time</h4>
+
+                  <p>
+                    <span id="scheduledBlockMinutes"></span> minutes
+                    <br>
+                    <small><i><span class="text-muted">time in the air: <span id="scheduledAirMinutes"></span> minutes</span></i></small>
+                  </p>
+
+                  <div id="scheduledAirProgressBar"></div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <h4>Historical Performance</h4>
+
+                  <p>
+                    <span id="ontimePercent"></span> on-time
+                    <br>
+                    <input id="allOntimeStars" class="rating" data-readonly="true" data-glyphicon="false" data-rating-class="rating-fa" data-size="xs" data-show-clear="false" data-show-caption="true">
+                  </p>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <h4>Equiptment</h4>
+
+                  <p>
+                    <span id="equipment"></span>
+                    <br>
+                    <small>(tail number:
+                      <span id="tailNumber"></span>)
+                    </small>
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-5 map">
+      <div id="map-canvas"></div>
+    </div>
+
+  </div>
+
 </div>

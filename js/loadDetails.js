@@ -8,218 +8,99 @@ function loadDetails(IATA, flightNumber) {
   console.log('loadDetails() IATA: ' + IATA);
   console.log('loadDetails() flightNumber: ' + flightNumber);
 
-  $("#contentarea").load("ajax/details.html", function() {
+  $("#main").load("ajax/details.html", function() {
 
-    // get flight ratings
     $.ajax({
 
-      // standard URL for use with CORS Google Chrome entension
-      // url: 'https://api.flightstats.com/flex/ratings/rest/v1/json/flight/' + IATA + '/' + flightNumber + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d'
+      url: 'https://kiosk-engine.herokuapp.com/flightstats/' + IATA + '/' + flightNumber + ''
 
-      // URL for use without CORS Google Chrome entension
-      url: 'https://mwaa-repeater.herokuapp.com/flex/ratings/rest/v1/json/flight/' + IATA + '/' + flightNumber + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d'
-
-      // url: "http://localhost:9000/mock/RatingsAPI.json"
+      // URL for dev + mock data purposes
+      // url: "https://kiosk-engine.herokuapp.com/sample"
 
     }).then(function(results) {
-      var ratings = results.ratings[0];
-      // percent on-time
-      var ontimePercent = numeral(ratings.ontimePercent).format('0.0%');
-      $("#ontimePercent").text(ontimePercent);
-      // star rating
-      var allOntimeStars = numeral(ratings.allOntimeStars).format('0.0');
-      $("#allOntimeStars").rating('update', allOntimeStars);
-    });
-
-    // get flight stats
-    var year = moment().year();
-    var month = moment().month() + 1;
-    var date = moment().date();
-    $.ajax({
-
-      // standard URL for use with CORS Google Chrome entension
-      // url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/' + IATA + '/' + flightNumber + '/dep/' + year + '/' + month + '/' + date + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&utc=false&airport=DCA'
-
-      // URL for use without CORS Google Chrome entension
-      url: 'https://mwaa-repeater.herokuapp.com/flex/flightstatus/rest/v2/json/flight/status/' + IATA + '/' + flightNumber + '/dep/' + year + '/' + month + '/' + date + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&utc=false&airport=DCA'
-
-      // url: "http://localhost:9000/mock/FlightStatusAPI.json"
-
-    }).then(function(results) {
-
-      var airlines = results.appendix.airlines[0];
 
       // The name of the carrier (String).
-      $("#airlineName").text(airlines.name);
+      $('#airlineName').text(results.compiledStats.airlineName);
 
-      // The flight number (as served in function request)
-      $("#flightNumber").text(flightNumber);
-
-      // The primary customer service phone number for the carrier (String).
-      $("#phoneNumber").text(airlines.phoneNumber);
-
-      var flightStats = results.flightStatuses[0];
-
-      var operationalTimes = flightStats.operationalTimes;
-      console.log(operationalTimes);
-
-      // The published departure time for the flight provided by the airline's published operating schedule.
-      var publishedDeparture = moment(operationalTimes.publishedDeparture.dateLocal).format("LT");
-      $("#publishedDeparture").text(publishedDeparture);
-
-      // An estimated gate arrival time based on current observations
-      var dateLocal;
-      dateLocal = operationalTimes.scheduledGateArrival.dateLocal;
-      var estimatedGateArrival = moment(dateLocal).format("LT");
-      $("#estimatedGateArrival").text(estimatedGateArrival);
-
-      var departureAirport = results.appendix.airports[0];
+      // The flight number (String)
+      $("#flightNumber").text(results.compiledStats.flightNumber);
 
       // The name of the departure airport (String).
-      $("#departureAirport").text(departureAirport.name);
-
-      // Gate departing from
-      $("#departureGate").text(flightStats.airportResources.departureTerminal + "-" + flightStats.airportResources.departureGate);
-
-      // send gate information to load food & dining options
-
-      var gate = flightStats.airportResources.departureGate;
-      if (gate > 34 || gate === "35X") {
-        var gateLocation = 'Terminal C'
-      } else if (gate > 22 && gate < 35) {
-        var gateLocation = 'Terminal B/C'
-      } else if (gate > 9 && gate < 23) {
-        var gateLocation = 'Terminal B'
-      } else if (gate < 10) {
-        var gateLocation = 'Terminal A'
-      };
-      loadNearGate(gateLocation);
-
-      var destinationAirport = results.appendix.airports[1];
+      $("#departureAirport").text(results.compiledStats.departureAirport);
 
       // The name of the destination airport (String).
-      $("#destinationAirport").text(destinationAirport.name);
+      $("#destinationAirport").text(results.compiledStats.destinationAirport);
 
-      var arrivingTerminal = flightStats.airportResources.arrivalTerminal;
-      var arrivingGate = flightStats.airportResources.arrivalGate;
+      // Gate departing from
+      $("#departureGate").text(results.compiledStats.departureGate);
+
+      // The published departure time for the flight provided by the airline's published operating schedule.
+      $("#publishedDeparture").text(results.compiledStats.publishedDeparture);
+      console.log('flight departure: ' + results.compiledStats.publishedDeparture);
+
+      // Get estimated boarding time
+      var boardingTime = moment("11:59 AM", "LT");
+      boardingTime.subtract(30, 'minutes').minutes();
+      console.log('boardingTime: ' + boardingTime._d);
+      // var now = moment();
+      var boardingStart = moment(boardingTime).fromNow();
+      console.log(boardingStart);
+      $("#boardingStart").text(boardingStart);
+
+      // An estimated gate arrival time based on current observations
+      $("#estimatedGateArrival").text(results.compiledStats.estimatedGateArrival);
 
       // Gate arriving at
-      if (arrivingTerminal != undefined) {
-        $("#destinationGate").text(arrivingTerminal + "-" + arrivingGate);
-      } else {
-        $("#destinationGate").text(arrivingGate);
-      }
-
-      // Baggage claim at destination airport
-      var baggageClaim = flightStats.airportResources.baggage;
-      if (baggageClaim === "") {
-        var baggageClaim = "Not known at this time"
-      };
-      $("#baggageClaim").text(baggageClaim);
-
-      // get weather at destination airport
-      destinationWeather(destinationAirport.iata);
-
-      // specs.destAirport.airportName = specsResponse.appendix.airports[0].name;
-      //
-      // // The IATA code for the airport (String).
-      // specs.destAirport.iata = specsResponse.appendix.airports[0].iata;
-      //
-      // // The local time at the Airport when the request was made in ISO-8601 format. yyyy-MM-dd'T'HH:mm:ss.SSS.
-      // specs.destAirport.localTime = specsResponse.appendix.airports[0].localTime;
-      //
-      // // The latitude of the airport in decimal degrees (Double).
-      // specs.destAirport.latitude = specsResponse.appendix.airports[0].latitude;
-      //
-      // // The longitude of the airport in decimal degrees (Double).
-      // specs.destAirport.longitude = specsResponse.appendix.airports[0].longitude;
-
-      var equipments = results.appendix.equipments[0]
-
-      // The descriptive name for the equipment type. (String)
-      var equipment = _.trimRight(equipments.name, ' Passenger');
-      $("#equipment").text(equipment);
-
-      // Tail number for flight
-      $("#tailNumber").text(flightStats.flightEquipment.tailNumber);
-
-      // // The current status of the flight.
-      // // [A] Active
-      // // [C]	Canceled
-      // // [D]	Diverted
-      // // [DN] Data source needed
-      // // [L]	Landed
-      // // [NO] Not Operational
-      // // [R]	Redirected
-      // // [S] Scheduled
-      // // [U]	Unknown
-
-      // IATA service classes offered for the flight. (String)
-      // [F] first class
-      // [J] business class
-      // [W] premium economy
-      // [Y] economy class
-
-      var serviceClasses = flightStats.schedule.serviceClasses;
-      var firstClass = _.includes(serviceClasses, 'F');
-      var businessClass = _.includes(serviceClasses, 'J');
-      var premiumEconomyClass = _.includes(serviceClasses, 'W');
-      var economyClass = _.includes(serviceClasses, 'Y');
-
-      if (firstClass === true) {
-        firstClass = 'Yes'
-      } else {
-        firstClass = 'No'
-      };
-      $("#firstClass").text(firstClass);
-
-      if (businessClass === true) {
-        businessClass = 'Yes'
-      } else {
-        businessClass = 'No'
-      };
-      $("#businessClass").text(businessClass);
-
-      if (premiumEconomyClass === true) {
-        premiumEconomyClass = 'Yes'
-      } else {
-        premiumEconomyClass = 'No'
-      };
-      $("#premiumEconomyClass").text(premiumEconomyClass);
-
-      if (economyClass === true) {
-        economyClass = 'Yes'
-      } else {
-        economyClass = 'No'
-      };
-      $("#economyClass").text(economyClass);
-
-      var flightDurations = flightStats.flightDurations;
+      $("#destinationGate").text(results.compiledStats.destinationGate);
 
       // The calculated scheduled time between blocks (gate to gate) in whole minutes (Integer)
-      $("#scheduledBlockMinutes").text(flightDurations.scheduledBlockMinutes);
+      $("#scheduledBlockMinutes").text(results.compiledStats.scheduledBlockMinutes);
 
       // The calculated scheduled time in the air (runway to runway) in whole minutes (Integer)
-      $("#scheduledAirMinutes").text(flightDurations.scheduledAirMinutes);
-      var scheduledAirMinutesStats = (flightDurations.scheduledAirMinutes / flightDurations.scheduledBlockMinutes) * 100;
-      var scheduledTaxiOutMinutesStats = (flightDurations.scheduledTaxiOutMinutes / flightDurations.scheduledBlockMinutes) * 100;
-      var scheduledTaxiInMinutesStats = (flightDurations.scheduledTaxiInMinutes / flightDurations.scheduledBlockMinutes) * 100;
+      $("#scheduledAirMinutes").text(results.compiledStats.scheduledAirMinutes);
+
       var scheduledAirProgressBar = '<div class="progress">'
-      scheduledAirProgressBar += '<div class="progress-bar progress-bar-warning" style="width: ' + scheduledTaxiOutMinutesStats + '%"></div>';
-      scheduledAirProgressBar += '<div class="progress-bar progress-bar-info" style="width: ' + scheduledAirMinutesStats + '%"></div>';
-      scheduledAirProgressBar += '<div class="progress-bar progress-bar-warning" style="width: ' + scheduledTaxiInMinutesStats + '%"></div>';
+      scheduledAirProgressBar += '<div class="progress-bar progress-bar-warning" style="width: ' + results.compiledStats.scheduledTaxiOutMinutesStats + '%"></div>';
+      scheduledAirProgressBar += '<div class="progress-bar progress-bar-info" style="width: ' + results.compiledStats.scheduledAirMinutesStats + '%">in the air</div>';
+      scheduledAirProgressBar += '<div class="progress-bar progress-bar-warning" style="width: ' + results.compiledStats.scheduledTaxiInMinutesStats + '%"></div>';
       scheduledAirProgressBar += '</div>';
       $("#scheduledAirProgressBar").html(scheduledAirProgressBar);
 
-      // // The calculated scheduled time for the plane to taxi out and take off (gate to runway) in whole minutes (Integer)
-      // $("#scheduledTaxiOutMinutes").text(flightDurations.scheduledTaxiOutMinutes);
+      // The descriptive name for the equipment type. (String)
+      $("#equipment").text(results.compiledStats.equipment);
 
-      // // The calculated scheduled time for the plane to land and taxi in (runway to gate) in whole minutes (Integer)
-      // $("#scheduledTaxiInMinutes").text(flightDurations.scheduledTaxiInMinutes);
+      // Tail number for flight
+      $("#tailNumber").text(results.compiledStats.tailNumber);
 
-      // get flight route
-      var flightId = flightStats.flightId;
-      loadRoute(flightId);
+      // $("#firstClass").text(results.compiledStats.firstClass);
+      // $("#businessClass").text(results.compiledStats.businessClass);
+      // $("#premiumEconomyClass").text(results.compiledStats.premiumEconomyClass);
+      // $("#economyClass").text(results.compiledStats.economyClass);
+
+      // send gate information to load food & dining options
+      loadNearGate(results.compiledStats.gateLocation);
+
+      // percent on-time
+      $("#ontimePercent").text(results.ratings.ontimePercent);
+
+      // star rating
+      $("#allOntimeStars").rating('update', results.ratings.allOntimeStars);
+
+      // The primary customer service phone number for the carrier (String).
+      $("#phoneNumber").text(results.compiledStats.phoneNumber);
+
+      // Baggage claim at destination airport
+      $("#baggageClaim").text(results.compiledStats.baggageClaim);
+
+      // weather at destination airport
+      $("#wind").text(results.weather.wind);
+      $("#temp").text(results.weather.temp);
+      $("#weather").text(results.weather.type);
+      $("#visibility").text(results.weather.visibility);
+
+      // build flight map
+      var path = results.route.waypoints;
+      flightMap(path);
 
     });
 
@@ -227,53 +108,67 @@ function loadDetails(IATA, flightNumber) {
 
 };
 
-// // get weater at destination airport
-// function destinationWeather(destIATA) {
-//   $.ajax({
-//     url: "http://services.faa.gov/airport/status/" + destIATA + "?format=application/json"
-//   }).then(function(response) {
-//     $("#wind").text(response.weather.wind);
-//     $("#temp").text(response.weather.temp);
-//     $("#weather").text(response.weather.weather);
-//     $("#visibility").text(response.weather.visibility);
-//   })
-// };
-
-// get weater at destination airport
-function destinationWeather(destIATA) {
-  $.getJSON("http://services.faa.gov/airport/status/" + destIATA + "?format=application/json", function(data) {
-    console.log(data);
-    $("#wind").text(data.weather.wind);
-    $("#temp").text(data.weather.temp);
-    $("#weather").text(data.weather.weather);
-    $("#visibility").text(data.weather.visibility);
-  });
-};
-
-
-var flightPlanCoordinates = [];
-
-// load flight route
-function loadRoute(flightId) {
-  $.ajax({
-
-    // standard URL for use with CORS Google Chrome entension
-    // url: 'https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/track/' + flightId + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&includeFlightPlan=true&maxPositions=2'
-
-    // URL for use without CORS Google Chrome entension
-    url: 'https://mwaa-repeater.herokuapp.com/flex/flightstatus/rest/v2/json/flight/track/' + flightId + '?appId=63121b9c&appKey=510908f052a4f6b24ab9515c6609225d&includeFlightPlan=true&maxPositions=2'
-
-    //
-    // url: "http://localhost:9000/mock/flightRoute.json"
-
-  }).then(function(tracks) {
-    var waypoints = tracks.flightTrack.waypoints;
-    flightMap(waypoints);
-  });
-}
-
 // load flight route map
 function flightMap(path) {
+
+  // build starting route
+  var route = [];
+
+  // starting gate
+  var waypoint = {};
+  waypoint.lon = -77.041600;
+  waypoint.lat = 38.852477;
+  route.push(waypoint);
+
+  // rotate point
+  var waypoint = {};
+  waypoint.lon = -77.041842;
+  waypoint.lat = 38.852972;
+  route.push(waypoint);
+
+  // turn onto taxi way
+  var waypoint = {};
+  waypoint.lon = -77.039671;
+  waypoint.lat = 38.853494;
+  route.push(waypoint);
+
+  // turn point
+  var waypoint = {};
+  waypoint.lon = -77.038352;
+  waypoint.lat = 38.843039;
+  route.push(waypoint);
+
+  // start of runway 1
+  var waypoint = {};
+  waypoint.lon = -77.036910;
+  waypoint.lat = 38.843109;
+  route.push(waypoint);
+
+  // end of runway 1 (Gravelly Point)
+  var waypoint = {};
+  waypoint.lon = -77.038927;
+  waypoint.lat = 38.866278;
+  route.push(waypoint);
+
+  // Gets all but the first element of path
+  var editedPath = _.rest(path);
+
+  // merge route with editedPath
+  for (var i = 0; i < editedPath.length; i++) {
+    var waypoint = editedPath[i];
+    route.push(waypoint);
+  };
+
+  // remove the first (starting) coordinates
+  // var route = path.shift();
+  // var route = path.shift();
+  // var route = path;
+
+  // var first = _.first(route);
+  // console.log(first);
+
+  // add new coordinates to the route/path
+  // route = route.unshift({lon:,lat:},{lon:,lat:});
 
   var mapOptions = {
     zoom: 6,
@@ -314,9 +209,15 @@ function flightMap(path) {
     styles: styles
   });
 
+  // var flightPlanCoordinates = new Array();
+  // for (var i = 0; i < path.length; i++) {
+  //   var waypoint = path[i];
+  //   flightPlanCoordinates.push(new google.maps.LatLng(waypoint.lat, waypoint.lon));
+  // };
+
   var flightPlanCoordinates = new Array();
-  for (var i = 0; i < path.length; i++) {
-    var waypoint = path[i];
+  for (var i = 0; i < route.length; i++) {
+    var waypoint = route[i];
     flightPlanCoordinates.push(new google.maps.LatLng(waypoint.lat, waypoint.lon));
   };
 
@@ -342,6 +243,7 @@ function flightMap(path) {
 
 };
 
+
 function loadNearGate(gateLocation) {
   console.log('gateLocation: ' + gateLocation);
   var Locations = Parse.Object.extend("DCAFoodAndRetail");
@@ -353,13 +255,13 @@ function loadNearGate(gateLocation) {
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.get('Type') === "Eateries & Snacks") {
-          $("#food").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#food").append('<li>' + object.get('Name') + '</li>');
         } else if (object.get('Type') === "Newsstands") {
-          $("#retail").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#retail").append('<li>' + object.get('Name') + '</li>');
         } else if (object.get('Type') === "Sit Down Restaurants & Bars") {
-          $("#food").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#food").append('<li>' + object.get('Name') + '</li>');
         } else {
-          $("#retail").append('<li class="list-group-item">' + object.get('Name') + '</li>');
+          $("#retail").append('<li>' + object.get('Name') + '</li>');
         };
       }
     },
